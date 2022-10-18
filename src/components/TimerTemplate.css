@@ -1,0 +1,23 @@
+.timer-wrapper {
+  margin: 1rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 600px;
+}
+
+.timer {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+p.info {
+  font-size: 2rem;
+}
+p.info.running {
+  color: #ff922b;
+}
+p.info.resting {
+  color: #94d82d
+}
