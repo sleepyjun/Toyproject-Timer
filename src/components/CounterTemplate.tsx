@@ -8,18 +8,18 @@ type Props = {
 };
 
 const Counter = ({ init, number, setNumber }: Props) => {
-  const handleIncrease = () => {
+  const handleIncrease = useCallback(() => {
     if (typeof number === 'string') return;
     setNumber(number + 1);
-  };
+  }, []);
 
-  const handleDecrease = () => {
+  const handleDecrease = useCallback(() => {
     if (typeof number === 'string') return;
     if (number <= 1) return;
     setNumber(number - 1);
-  };
+  }, []);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value === '') {
       setNumber('');
@@ -29,7 +29,7 @@ const Counter = ({ init, number, setNumber }: Props) => {
     const number = parseInt(value);
     if (number <= 0) return;
     setNumber(number);
-  };
+  }, []);
 
   if (init === true) {
     return (
@@ -44,9 +44,19 @@ const Counter = ({ init, number, setNumber }: Props) => {
           value={number}
           onChange={onChange}
         />
-        <div className="btn-group" role="group">
-          <button className="btn btn-lg btn-success" onClick={handleIncrease}>+</button>
-          <button className="btn btn-lg btn-danger" onClick={handleDecrease}>-</button>
+        <div
+          className="btn-group"
+          role="group">
+          <button
+            className="btn btn-lg btn-success"
+            onClick={handleIncrease}>
+            +
+          </button>
+          <button
+            className="btn btn-lg btn-danger"
+            onClick={handleDecrease}>
+            -
+          </button>
         </div>
       </div>
     );
