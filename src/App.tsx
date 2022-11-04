@@ -8,8 +8,9 @@ let cachedNumber: number, cachedSecond: number;
 
 const App = () => {
   const [number, setNumber] = useState(3);
-  const [second, setSecond] = useState(30);
+  const [second, setSecond] = useState(60);
   const [initialize, setInitialize] = useState(true);
+  const [running, setRunning] = useState(false);
 
   const go = () => {
     if (typeof number === 'string') return;
@@ -28,7 +29,7 @@ const App = () => {
   const onExpire = () => {
     body.className = 'flash';
     setTimeout(() => (body.className = ''), 5000);
-
+    setRunning(false);
     if (number > 0) {
       setNumber(number - 1);
     }
@@ -46,6 +47,7 @@ const App = () => {
     <div className="container">
       <CounterTemplate
         init={initialize}
+        running={running}
         number={number}
         setNumber={setNumber}
       />
@@ -53,6 +55,7 @@ const App = () => {
         init={initialize}
         second={second}
         setSecond={setSecond}
+        setRunning={setRunning}
         onExpire={onExpire}
       />
       <div className="trigger-wrapper">

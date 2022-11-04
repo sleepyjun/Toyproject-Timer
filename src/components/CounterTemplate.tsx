@@ -3,21 +3,22 @@ import './CounterTemplate.css';
 
 type Props = {
   init: boolean;
+  running: boolean;
   number: number;
   setNumber: Function;
 };
 
-const Counter = ({ init, number, setNumber }: Props) => {
+const Counter = ({ init, running, number, setNumber }: Props) => {
   const handleIncrease = useCallback(() => {
     if (typeof number === 'string') return;
     setNumber(number + 1);
-  }, []);
+  }, [number]);
 
   const handleDecrease = useCallback(() => {
     if (typeof number === 'string') return;
     if (number <= 1) return;
     setNumber(number - 1);
-  }, []);
+  }, [number]);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -64,7 +65,7 @@ const Counter = ({ init, number, setNumber }: Props) => {
   return (
     <div className="counter-wrapper">
       <h1>남은 세트 수</h1>
-      <p className="remain">{number}</p>
+      <p className="remain">{running === true ? number-1 : number}</p>
     </div>
   );
 };

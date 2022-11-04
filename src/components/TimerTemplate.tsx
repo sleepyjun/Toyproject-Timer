@@ -6,10 +6,11 @@ type Props = {
   init: boolean;
   second: number;
   setSecond: Function;
+  setRunning: Function;
   onExpire: () => void;
 };
 
-const Timer = ({ init, second, setSecond, onExpire }: Props) => {
+const Timer = ({ init, second, setSecond, setRunning, onExpire }: Props) => {
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + second);
   const { seconds, minutes, isRunning, pause, resume, restart } = useTimer({
@@ -39,11 +40,15 @@ const Timer = ({ init, second, setSecond, onExpire }: Props) => {
 
   useEffect(() => {
     if (init === true) {
+      setRunning(false);
       pause();
     } else {
-      restart(expiryTimestamp, false);
+      if (isRunning === false) {
+        setRunning(false);
+        restart(expiryTimestamp, false);
+      }
     }
-  }, [init, second]);
+  }, [init, isRunning, second]);
 
   if (init === true) {
     return (
@@ -79,18 +84,25 @@ const Timer = ({ init, second, setSecond, onExpire }: Props) => {
           onClick={() => {
             const time = new Date();
             time.setSeconds(time.getSeconds() + second);
+            setRunning(true);
             restart(time, true);
           }}>
           휴식 시작
         </button>
         <button
           className="btn btn-outline-dark"
-          onClick={pause}>
+          onClick={() => {
+            setRunning(false);
+            pause();
+          }}>
           휴식 일시 정지
         </button>
         <button
           className="btn btn-outline-dark"
-          onClick={resume}>
+          onClick={() => {
+            setRunning(true);
+            resume();
+          }}>
           휴식 재개
         </button>
       </div>
