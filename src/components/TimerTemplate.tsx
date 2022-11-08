@@ -41,11 +41,10 @@ const Timer = ({ init, second, setSecond, setRunning, onExpire }: Props) => {
   useEffect(() => {
     if (init === true) {
       setRunning(false);
-      pause();
+      restart(expiryTimestamp, false);
     } else {
       if (isRunning === false) {
         setRunning(false);
-        restart(expiryTimestamp, false);
       }
     }
   }, [init, isRunning, second]);
