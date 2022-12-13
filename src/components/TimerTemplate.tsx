@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTimer } from 'react-timer-hook';
 import './TimerTemplate.css';
 
@@ -45,6 +45,11 @@ const Timer = ({ init, second, setSecond, setRunning, onExpire }: Props) => {
     } else {
       if (isRunning === false) {
         setRunning(false);
+        if (seconds === 0 && minutes === 0) {
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + second);
+          restart(time, false);
+        }
       }
     }
   }, [init, isRunning, second]);
@@ -86,24 +91,27 @@ const Timer = ({ init, second, setSecond, setRunning, onExpire }: Props) => {
             setRunning(true);
             restart(time, true);
           }}>
-          휴식 시작
+          {isRunning === true ? '휴식 재시작' : '휴식 시작'}
         </button>
-        <button
-          className="btn btn-outline-dark"
-          onClick={() => {
-            setRunning(false);
-            pause();
-          }}>
-          휴식 일시 정지
-        </button>
-        <button
-          className="btn btn-outline-dark"
-          onClick={() => {
-            setRunning(true);
-            resume();
-          }}>
-          휴식 재개
-        </button>
+        {isRunning === true ? (
+          <button
+            className="btn btn-outline-dark"
+            onClick={() => {
+              setRunning(false);
+              pause();
+            }}>
+            휴식 일시 정지
+          </button>
+        ) : (
+          <button
+            className="btn btn-outline-dark"
+            onClick={() => {
+              setRunning(true);
+              resume();
+            }}>
+            휴식 재개
+          </button>
+        )}
       </div>
     </div>
   );
