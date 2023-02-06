@@ -10,7 +10,7 @@ jobs:
     
     steps:
     - name: Initializing Bulid environment
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
     
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
